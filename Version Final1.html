@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asesorías Empresariales</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('desktop1.jpg') no-repeat center/cover;
+      transition: background-image 0.5s ease;
+      color: #333;
+    }
+
+    header {
+      background: rgba(0, 64, 128, 0.5); /* azul semitransparente */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px); /* para Safari */
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .logo {
+      font-family: 'Libre Baserville', serif;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .logo img {
+      height: 35px;
+      margin-right: 10px;
+    }
+
+    #menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.activo {
+      background-color: #0059b3;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 36px;
+      left: 0;
+      background: #003366;
+      border-radius: 6px;
+      flex-direction: column;
+      min-width: 200px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      z-index: 1000;
+    }
+
+    .submenu a {
+      padding: 10px 15px;
+      white-space: nowrap;
+    }
+
+    .submenu a:hover {
+      background-color: #0059b3;
+    }
+
+    .nav-item:hover .submenu {
+      display: flex;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      min-height: 70vh;
+    }
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    footer {
+      background: rgba(0, 51, 102, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .btn-enviar {
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-enviar:hover {
+      background-color: #0059b3;
+    }
+
+    .btn-wsp {
+      display: inline-block;
+      background: #25d366;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-wsp:hover {
+      background-color: #1ebe5d;
+    }
+
+    #info-servicio {
+      color: #004080;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 700px) {
+      #menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #004080;
+        flex-direction: column;
+        display: none;
+        z-index: 999;
+      }
+
+      nav.show {
+        display: flex;
+      }
+
+      nav a {
+        padding: 12px 25px;
+        border-top: 1px solid #0059b3;
+      }
+
+      .nav-item:hover .submenu {
+        display: none;
+      }
+
+      .nav-item.open .submenu {
+        display: flex;
+        flex-direction: column;
+        background: #003366;
+        padding-left: 20px;
+
+      }
+
+      @media (max-width: 600px) {
+         .logo img {
+         height: 45px;
+         }
+       }
+
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logovc.png" alt="Logo de la empresa" style="height: 70px; margin-right: 10px;">
+    CH. OUTSOURCING
+  </div>
+  <div id="menu-toggle"><i class="fas fa-bars"></i></div>
+  <nav>
+    <a href="#" data-seccion="inicio" data-bg="desktop1.jpg" class="activo"><i class="fas fa-home"></i> Inicio</a>
+    <div class="nav-item">
+      <a href="#" data-seccion="servicios" data-bg="desktop2.jpg"><i class="fas fa-briefcase"></i> Servicios <i class="fas fa-caret-down"></i></a>
+      <div class="submenu">
+        <a href="#" data-seccion="asesoria-contable" data-bg="desktop2.jpg"><i class="fas fa-calculator"></i> Asesoría Contable</a>
+        <a href="#" data-seccion="consultoria-administrativa" data-bg="desktop3.jpg"><i class="fas fa-chart-line"></i> Consultoría Administrativa</a>
+        <a href="#" data-seccion="planificacion-financiera" data-bg="desktop4.jpg"><i class="fas fa-hand-holding-usd"></i> Planificación Financiera</a>
+      </div>
+    </div>
+    <a href="#" data-seccion="nosotros" data-bg="desktop5.jpg"><i class="fas fa-users"></i> Nosotros</a>
+    <a href="#" data-seccion="contacto" data-bg="desktop6.jpg"><i class="fas fa-envelope"></i> Contacto</a>
+  </nav>
+</header>
+
+<main>
+  <section id="inicio" class="active">
+    <h2>Bienvenido</h2>
+    <p>Te damos la bienvenida a Asesorías Empresariales. Descubre cómo podemos ayudarte a hacer crecer tu negocio.</p>
+  </section>
+
+  <section id="servicios">
+    <h2>Servicios</h2>
+    <p>Ofrecemos asesoría contable, consultoría administrativa y planificación financiera para ayudarte a crecer.</p>
+  </section>
+
+  <section id="asesoria-contable">
+    <h2>Asesoría Contable</h2>
+    <p>Detalles sobre servicios contables.</p>
+  </section>
+
+  <section id="consultoria-administrativa">
+    <h2>Consultoría Administrativa</h2>
+    <p>Detalles sobre consultoría administrativa.</p>
+  </section>
+
+  <section id="planificacion-financiera">
+    <h2>Planificación Financiera</h2>
+    <p>Detalles sobre planificación financiera.</p>
+  </section>
+
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <p>Conoce más sobre nuestro equipo y misión.</p>
+  </section>
+
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <a href="https://wa.me/573103010184?text=Hola%20Quiero%20contactar%20con%20Asesorias%20Empresariales" class="btn-wsp" target="_blank">
+      <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+    </a>
+    <form action="https://formsubmit.co/ejemplo@correo.com" method="POST" target="_blank">
+      <input type="text" name="Nombre" placeholder="Nombre completo" required />
+      <input type="email" name="Correo" placeholder="Correo electrónico" required />
+      <input type="tel" name="Teléfono" placeholder="Teléfono" />
+      <select name="Servicio" id="servicio-select" required>
+        <option value="">Seleccione un servicio</option>
+        <option value="Asesoría Contable">Asesoría Contable</option>
+        <option value="Consultoría Administrativa">Consultoría Administrativa</option>
+        <option value="Planificación Financiera">Planificación Financiera</option>
+      </select>
+      <div id="info-servicio"></div>
+      <textarea name="Mensaje" rows="5" placeholder="Mensaje" required></textarea>
+      <button type="submit" class="btn-enviar">Enviar Mensaje</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 CH. OUTSOURCING. Todos los derechos reservados.     Contactanos: choutsourcing1@gmail.com
+</footer>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const nav = document.querySelector('nav');
+  const enlaces = document.querySelectorAll('nav a[data-seccion]');
+  const secciones = document.querySelectorAll('main section');
+
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('show');
+  });
+
+  enlaces.forEach((enlace) => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      const seccionId = enlace.dataset.seccion;
+      const bg = enlace.dataset.bg;
+
+      document.body.style.backgroundImage = `url('${bg}')`;
+      secciones.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(seccionId).classList.add('active');
+
+      enlaces.forEach(a => a.classList.remove('activo'));
+      enlace.classList.add('activo');
+
+      nav.classList.remove('show'); // Cierra menú hamburguesa
+    });
+  });
+
+  const servicioSelect = document.getElementById('servicio-select');
+  const infoServicio = document.getElementById('info-servicio');
+
+  const descripciones = {
+    "Asesoría Contable": "Incluye declaraciones, auditorías y contabilidad general.",
+    "Consultoría Administrativa": "Optimiza tus procesos internos y toma decisiones efectivas.",
+    "Planificación Financiera": "Proyección económica, inversión y control financiero."
+  };
+
+  servicioSelect.addEventListener('change', () => {
+    const seleccionado = servicioSelect.value;
+    infoServicio.textContent = descripciones[seleccionado] || '';
+  });
+</script>
+
+</body>
+</html>
